@@ -1,0 +1,10 @@
+server:
+  port: 9001
+spring:
+  redis:
+    database: 3
+    host: 175.24.201.192
+    password: redis123456
+    port: 6379
+    ssl: false
+    timeout: 5000
