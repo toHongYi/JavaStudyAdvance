@@ -1,4 +1,4 @@
-package com.hongyi.threadDemo;
+package com.hongyi.threadDemo.multipleThread;
 
 import java.util.concurrent.*;
 
