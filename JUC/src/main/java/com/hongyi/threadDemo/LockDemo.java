@@ -1,5 +1,7 @@
 package com.hongyi.threadDemo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 
@@ -11,6 +13,10 @@ import java.util.concurrent.locks.ReadWriteLock;
  */
 public class LockDemo {
     public static void main(String[] args) {
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+
 
         ReadWriteLock lock = new ReadWriteLock() {
             @Override

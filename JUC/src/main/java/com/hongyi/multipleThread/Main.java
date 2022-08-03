@@ -1,4 +1,4 @@
-package com.hongyi.threadDemo.multipleThread;
+package com.hongyi.multipleThread;
 
 /**
  * @author HongYi
