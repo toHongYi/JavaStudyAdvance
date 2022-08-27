@@ -1,5 +1,7 @@
 package com.atguigu.linkedlist;
 
+import org.junit.Test;
+
 /**
  * @author HongYi
  * @version 1.0
@@ -61,9 +63,65 @@ public class SingleLinkedListDemo {
 
     }
 
+    @Test
+    public void test02(){
+        // 进行一个测试
+        // 先创建节点
+        HeroNode hero1 = new HeroNode(1, "松江", "及时雨");
+        HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
+        HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
+        HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
+
+        // 创建一个链表
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        System.out.println("原来链表的情况~~");
+        // 加入
+        singleLinkedList.add(hero1);
+        singleLinkedList.add(hero4);
+        singleLinkedList.add(hero2);
+        singleLinkedList.add(hero3);
+        singleLinkedList.list();
+
+        System.out.println("反转链表");
+        reverseList(singleLinkedList.getHead());
+        singleLinkedList.list();
+
+    }
+
+    // 腾讯面试题
+    /**
+     * 1、先定义一个节点: reverseHead=new HeroNode();
+     * 2、从头到尾遍历原来的链表,没遍历一个节点,就将其取出,并放在新的链表的最前端;
+     * 3、原来的链表的head.next = reverseHead.next
+     * 4、
+     */
+
+    // 将单链表进行翻转
+    public static void reverseList(HeroNode head) {
+        // 如果当前链表为空,或者只有一个节点; 就无需反转,直接返回;
+        if (head.next == null || head.next.next == null) {
+            return;
+        }
+
+        // 定义一个辅助的指针(变量),帮助我们便利原来的链表
+        HeroNode cur = head.next;
+        HeroNode next = null;   //指向当前节点[cur]的下一个节点;
+        HeroNode reverseHead = new HeroNode(0, "", "");
+        // 2、从头到尾遍历原来的链表,没遍历一个节点,就将其取出,并放在新的链表的最前端;
+        // 动脑筋
+        while (cur != null) {
+            next = cur.next;    //先暂时保存当前节点的下一个节点;因为下一个节点需要使用;
+            cur.next = reverseHead.next;  //将cur的下一个节点指向新的链表的最前端
+            reverseHead.next = cur; //将cur连接到新的链表上;
+            cur = next; //让cur后移
+        }
+        // 将head.next 指向reverseHead.next,实现单链表的反转;
+        head.next = reverseHead.next;
+
+    }
+
     //查找链表中的倒数第K个结点【新浪面试题】
     //思路
-
     /**
      * 1、编写一个方法,接收head节点,同时接收一个index
      * 2、index表示的是倒数第index个节点;
