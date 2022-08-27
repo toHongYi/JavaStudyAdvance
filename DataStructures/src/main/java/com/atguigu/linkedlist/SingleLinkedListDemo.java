@@ -2,6 +2,8 @@ package com.atguigu.linkedlist;
 
 import org.junit.Test;
 
+import java.util.Stack;
+
 /**
  * @author HongYi
  * @version 1.0
@@ -64,7 +66,7 @@ public class SingleLinkedListDemo {
     }
 
     @Test
-    public void test02(){
+    public void test02() {
         // 进行一个测试
         // 先创建节点
         HeroNode hero1 = new HeroNode(1, "松江", "及时雨");
@@ -88,7 +90,57 @@ public class SingleLinkedListDemo {
 
     }
 
+    /**
+     * 测试逆袭打印
+     */
+    @Test
+    public void test3() {
+        // 进行一个测试
+        // 先创建节点
+        HeroNode hero1 = new HeroNode(1, "松江", "及时雨");
+        HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
+        HeroNode hero3 = new HeroNode(3, "吴用", "智多星");
+        HeroNode hero4 = new HeroNode(4, "林冲", "豹子头");
+
+        // 创建一个链表
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        System.out.println("原来链表的情况~~");
+        // 加入
+        singleLinkedList.add(hero1);
+        singleLinkedList.add(hero4);
+        singleLinkedList.add(hero2);
+        singleLinkedList.add(hero3);
+        singleLinkedList.list();
+        System.out.println("逆序打印链表,没有改变链表的结构");
+        reversePrint(singleLinkedList.getHead());
+    }
+
+    /**
+     * 方式二:
+     * 使用栈来实现逆序打印的效果;
+     */
+    public static void reversePrint(HeroNode head) {
+        if (head.next == null) {
+            return; //空链表,不能打印
+        }
+        //创建一个栈,将各个节点压入栈中
+        Stack<HeroNode> stack = new Stack<HeroNode>();
+        HeroNode cur = head.next;
+        // 将链表的所有节点压入栈中
+        while (cur != null) {
+            stack.push(cur);
+            cur = cur.next; // cur后移,这样就可以压入下一个节点
+        }
+
+        // 将栈中的节点进行打印
+        while (stack.size()>0){
+            System.out.println(stack.pop());    //利用stack的FILO
+        }
+
+    }
+
     // 腾讯面试题
+
     /**
      * 1、先定义一个节点: reverseHead=new HeroNode();
      * 2、从头到尾遍历原来的链表,没遍历一个节点,就将其取出,并放在新的链表的最前端;
@@ -122,6 +174,7 @@ public class SingleLinkedListDemo {
 
     //查找链表中的倒数第K个结点【新浪面试题】
     //思路
+
     /**
      * 1、编写一个方法,接收head节点,同时接收一个index
      * 2、index表示的是倒数第index个节点;
