@@ -7,11 +7,26 @@ import java.util.Arrays;
  * @version 1.0
  * @date 2022/10/23 11:29
  * @description: 对有序序列在插入时采用交换法, 并测试排序速度
+ *      移动式的冒泡排序;  【交换式】: 存在效率的不足;  优化为移位法
  */
 public class ShellSortEnhance {
     public static void main(String[] args) {
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
-        shellSort(arr);
+
+        // 测试要给80000个的随机数组
+        int[] arr2 = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            arr2[i] = (int) (Math.random() * 8000000); //生成一个[0,8000000]随机数
+        }
+
+        System.out.println("after sort");
+        long before = System.currentTimeMillis();
+
+        shellSort(arr2); //3347
+
+        System.out.println("time = " + (System.currentTimeMillis() - before));
+
+
     }
 
     // 根据前面的逐步分析,使用循环处理

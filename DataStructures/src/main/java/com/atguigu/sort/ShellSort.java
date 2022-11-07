@@ -25,7 +25,7 @@ public class ShellSort {
         // 因为第一轮排序,是将10个数据分成了5组
         for (int i = 5; i < arr.length; i++) {
             // 遍历各组中所有的元素(共5组,每组2个元素),步长5
-            for (int j = i - 5; j >= 0; j -= 5) {
+            for (int j = i - 5; j >= 0; j -= 5) {   //j -= 5;=>j = j - 5
                 // 如果当前元素大于加上步长后的那个元素后,说明交换
                 if (arr[j] > arr[j + 5]) {
 //                    int temp = arr[j]; 将其放到外部,用于减少初始化次数;
