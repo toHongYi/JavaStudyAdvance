@@ -35,7 +35,8 @@ public class InsertSortEnhance {
 
         // {101,34,119,1}; =》 {101,101,34,119,1} || 辅助变量存储 arr[1]
         // 定义待插入的数
-        for (int i = 1; i < arr.length; i++) {
+//        for (int i = 1; i < arr.length; i++) {
+        for (int i = 1; i <= arr.length-1; i++) {
             int insertVal = arr[i];
             int insertIndex = i - 1; // 即arr[1]的前面的这个数的下标
 
@@ -51,7 +52,8 @@ public class InsertSortEnhance {
             // 当退出while循环时,说明插入的位置找到,insertIndex + 1
             // 理解不了,可以debug;
 
-            // 这里我们判断是否需要赋值
+//            arr[insertIndex+1] = insertVal;
+            // 这里我们判断是否需要赋值,是对上方的一种优化策略;【若不需要赋值,那么insertIndex + 1 = 跟target下标一致】
             if (insertIndex + 1 != i) { // 当前
                 arr[insertIndex + 1] = insertVal;
             }
