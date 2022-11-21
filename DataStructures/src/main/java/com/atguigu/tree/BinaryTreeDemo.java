@@ -65,6 +65,16 @@ public class BinaryTreeDemo {
         } else {
             System.out.printf("没有找到 no = %d 的英雄", 5);
         }
+
+        // 测试删除
+        System.out.println("删除前,前序遍历");
+        binaryTree.preOrder(); // 1,2,3,5,4
+//        binaryTree.delNode(5); 叶子结点直接删除
+        binaryTree.delNode(3); // 子树直接删除
+        System.out.println("删除后,前序遍历");
+        binaryTree.preOrder();
+
+
     }
 }
 
@@ -74,6 +84,21 @@ class BinaryTree {
 
     public void setRoot(HeroNode root) {
         this.root = root;
+    }
+
+    // 删除结点
+    public void delNode(int no){
+        if (root != null){
+            // 如果只有一个root结点,这里立即判断root是不是就是要删除结点
+            if (root.getNo() == no ){
+                root = null;
+            }else {
+                // 递归删除
+                root.delNode(no);
+            }
+        }else {
+            System.out.println("空树,不能删除~");
+        }
     }
 
     // 前序遍历
@@ -105,28 +130,28 @@ class BinaryTree {
 
 
     // 前序遍历查找
-    public HeroNode preOrderSearch(int no){
-        if (root!=null){
+    public HeroNode preOrderSearch(int no) {
+        if (root != null) {
             return root.preOrderSearch(no);
-        }else {
+        } else {
             return null;
         }
     }
 
     // 中序遍历查找
-    public HeroNode infixOrderSearch(int no){
-        if (root!=null){
+    public HeroNode infixOrderSearch(int no) {
+        if (root != null) {
             return root.infixOrderSearch(no);
-        }else {
+        } else {
             return null;
         }
     }
 
     // 后续遍历查找
-    public HeroNode postOrderSearch(int no){
-        if (root!=null){
+    public HeroNode postOrderSearch(int no) {
+        if (root != null) {
             return root.postOrderSearch(no);
-        }else {
+        } else {
             return null;
         }
     }
@@ -184,6 +209,43 @@ class HeroNode {
                 "no=" + no +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+
+    /**
+     * 递归删除结点
+     * 1、如果删除的结点是叶子结点,则删除该结点;
+     * 2、如果删除的节日按是非叶子结点,则删除该子树;
+     */
+    public void delNode(int no) {
+        /**
+         * 思路
+         * 1.因为我们的二叉树是单向的,所以我们是判断当前结点的子结点是否需要删除结点m，而不能去判断当前这个结点时不时需要删除结点；
+         * 2.如果当前结点的左子结点不为空，并且左子结点就是要删除结点，就将this.left = null;并且返回(结束递归删除)
+         * 3.如果当前结点的右子节点不为空，并且右子结点就是要删除结点，就将this.right = null;并且就返回(结束递归删除)
+         * 4.如果第2和第3步没有删除结点,那么我们就需要向左子树进行递归删除
+         * 5.如果第4步也没有删除结点，则应当向右子树进行递归删除
+         */
+        //2.如果当前结点的左子结点不为空，并且左子结点就是要删除结点，就将this.left = null;并且返回(结束递归删除)
+        if (this.left != null && this.left.no == no) {
+            this.left = null;
+            return;
+        }
+        //3.如果当前结点的右子节点不为空，并且右子结点就是要删除结点，就将this.right = null;并且就返回(结束递归删除)
+        if (this.right != null && this.right.no == no) {
+            this.right = null;
+            return;
+        }
+        // 4.如果第2和第3步没有删除结点,那么我们就需要向左子树进行递归删除
+        if (this.left != null) {
+            this.left.delNode(no);
+            // return不可写,防止删除出现故障
+        }
+        // 5.如果第4步也没有删除结点，则应当向右子树进行递归删除\
+        if (this.right != null) {
+            this.right.delNode(no);
+        }
+
     }
 
     // 编写前序遍历的方法
@@ -280,7 +342,7 @@ class HeroNode {
     }
 
     // 后续查找
-    public HeroNode postOrderSearch(int no){
+    public HeroNode postOrderSearch(int no) {
         // 判断当前结点的左子节点是否为空,如果不为空,则递归中序查找
         HeroNode resNode = null;
         if (this.left != null) {
@@ -300,7 +362,7 @@ class HeroNode {
 
         // 如果左右子树都没有找到,就比较当前结点是不是
         System.out.println("进入后序查找");
-         // 比较当前节点是不是
+        // 比较当前节点是不是
         if (this.no == no) {
             return this;
         }
