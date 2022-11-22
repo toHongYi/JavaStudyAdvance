@@ -18,7 +18,7 @@ build/
 *.iws
 *.iml
 *.ipr
-*.target
+target
 out/
 
 ### NetBeans ###
