@@ -14,6 +14,9 @@ import java.util.List;
  * 3.组成一颗新的二叉树，该新的二叉树的根节点的权值是前面两颗二叉树根节点权值的和;
  * 4.再将这颗新的二叉树，以根节点的权值大小再次排序，不断重复1-2-3-4的步骤，直到数列中，所有的数据都被处理
  * 就得到一颗赫夫曼树
+ *
+ *  下一章:
+ *      定长编码、变长编码
  */
 public class HuffmanTree {
     public static void main(String[] args) {
@@ -83,6 +86,7 @@ public class HuffmanTree {
 // 实现Comparable<Node>
 class Node implements Comparable<Node> {
     int value; // 结点权值
+    char c;  // 字符
     Node left; // 指向左子结点
     Node right; // 指向右子结点
 
