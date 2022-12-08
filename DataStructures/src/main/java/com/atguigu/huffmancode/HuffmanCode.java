@@ -1,5 +1,6 @@
 package com.atguigu.huffmancode;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -29,6 +30,17 @@ public class HuffmanCode {
         byte[] sourceBytes = decode(huffmanCode, huffmanCodesBytes);
         System.out.println("原来的字符串=" + new String(sourceBytes)); // "i like like like java do you like a java";
 
+        // 测试压缩文件
+        String srcFile = "C:\\Users\\theLin\\IdeaProjects\\JavaStudyAdvance\\DataStructures\\src\\main\\resources\\683A1561.JPG";
+        String dstFile = "C:\\Users\\theLin\\Desktop\\dst.zip";
+        zipFile(srcFile, dstFile);
+        System.out.println("压缩文件ok~~");
+
+        // 测试解压文件
+        String zipFile = "C:\\Users\\theLin\\Desktop\\dst.zip";
+        String dstFile2 = "C:\\Users\\theLin\\Desktop\\683A156122.JPG";
+        unZipFile(zipFile,dstFile2);
+        System.out.println("解压文件ok~~");
         /** 分步过程
          List<Node> nodes = getNodes(contentBytes);
          System.out.println("nodes = " + nodes);
@@ -54,6 +66,97 @@ public class HuffmanCode {
          // 发送huffmanCodeBytes 数组  */
 
     }
+
+    // 编写一个方法,完成对压缩文件的解压
+
+    /**
+     * @param zipFile 准备解压的文件
+     * @param dstFile 将文件压缩到哪个路径
+     */
+    public static void unZipFile(String zipFile, String dstFile) {
+        // 定义文件的输入流
+        InputStream is = null;
+        // 定义一个对象输入流
+        ObjectInputStream ois = null;
+        // 定义文件的输出流
+        OutputStream os = null;
+        try {
+            // 创建文件输入流
+            is = new FileInputStream(zipFile);
+            // 创建一个和is关联的对象输入流
+            ois = new ObjectInputStream(is);
+            // 读取byte数组 huffmanBytes
+            byte[] huffmanBytes = (byte[]) ois.readObject();
+            // 读取赫夫曼编码表
+            Map<Byte, String> huffmanCodes = (Map<Byte, String>) ois.readObject();
+
+            // 解码
+            byte[] bytes = decode(huffmanCodes, huffmanBytes);
+            // 将bytes 数组写入到目标文件
+            os = new FileOutputStream(dstFile);
+            // 写数据到 dstFile 文件
+            os.write(bytes);
+        } catch (Exception e) {
+            System.out.println("e = " + e.getMessage());
+        } finally {
+            try {
+                os.close();
+                ois.close();
+                is.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+
+    }
+
+    // 编写方法，将一个文件进行压缩
+
+    /**
+     * @param srcFile 你传入的希望压缩的文件的全路径
+     * @param dstFile 我们压缩后将压缩文件放到哪个目录
+     */
+    public static void zipFile(String srcFile, String dstFile) {
+
+        // 创建输出流
+        OutputStream os = null;
+        // 创建文件输入流
+        FileInputStream is = null;
+        // 创建文件的输入流
+        ObjectOutputStream oos = null;
+        try {
+            is = new FileInputStream(srcFile);
+            // 创建一个和源文件大小一样的byte[]
+            byte[] b = new byte[is.available()];
+            // 读取文件
+            is.read(b); // 流全部入b
+            // 获取到文件对应的赫夫曼编码表
+            // 直接对源文件压缩
+            byte[] huffmanBytes = huffmanZip(b);
+            // 创建文件的输出流,存放压缩文件
+            os = new FileOutputStream(dstFile);
+            // 创建一个和文件输出流关联的ObjectOutPutStream
+            oos = new ObjectOutputStream(os);
+            // 把赫夫曼编码后的字节数组写入压缩文件
+            oos.writeObject(huffmanBytes); // 我们先把huffmanBytes
+
+            // 这里我们以对象流的方式写入赫夫曼编码,是为了以后我们恢复源文件时使用
+            // 注意一定要把赫夫曼编码写入压缩文件
+            oos.writeObject(huffmanBytes);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                is.close();
+                os.close();
+                oos.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 
     // 完成数据解压
     // 思路
@@ -91,14 +194,14 @@ public class HuffmanCode {
         // 创建要给集合,存放byte
         List<Byte> list = new ArrayList<>();
         // i可以理解成就是一个索引,扫描stringBuilder
-        for (int i = 0; i < stringBuilder.length();) { // 去掉 i++
+        for (int i = 0; i < stringBuilder.length(); ) { // 去掉 i++
             int count = 1; // 小的计数器
             boolean flag = true;
             Byte b = null;
 
             while (flag) {
                 // 递增的取出key 1  取出一个'1' '0'
-                String key = stringBuilder.substring(i, i+count); //i 不动,让count移动,直到匹配到一个字符
+                String key = stringBuilder.substring(i, i + count); //i 不动,让count移动,直到匹配到一个字符
                 b = map.get(key);
                 if (b == null) { // 说明没有匹配到
                     count++;
