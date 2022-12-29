@@ -4,7 +4,7 @@ package com.atguigu.sparsearray;
  * @author HongYi
  * @version 1.0
  * @date 2022/8/7 17:00
- * @description: TODO
+ * @description: 稀疏数组
  */
 public class SparseArray {
     public static void main(String[] args) {
