@@ -1,4 +1,4 @@
-package com.leetCode;
+package com.leetCode.twoSum;
 
 import java.util.Date;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.leetCode;
+package com.leetCode.twoSum;
 
 import java.math.BigInteger;
 import java.text.DecimalFormat;
@@ -40,12 +40,72 @@ public class twoLinkNodeSumDemo {
         listNode11.next = listNode12;
         listNode12.next = listNode13;
 
-        ListNode listNode = addTwoNumbers(listNode1, listNode4);
+        ListNode listNode = addTwoNumbersDemo02(listNode1, listNode4);
 
         showNode(listNode);
     }
 
+    public static ListNode addTwoNumbersDemo02(ListNode l1, ListNode l2) {
+        ListNode root = new ListNode(0);
+        ListNode curtor = root;
+        int carry = 0;
+
+        while (l1 != null || l2 != null || carry != 0) {
+            int val1 = l1 != null ? l1.val : 0;
+            int val2 = l2 != null ? l2.val : 0;
+            int sum = val1 + val2 + carry;
+            carry = sum / 10;
+            curtor.next = new ListNode(sum % 10);
+            curtor = curtor.next;
+
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+        }
+        return root.next;
+    }
+
+
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        // 初始化结点,使用的时候使用结点node.next()进行处理;
+        ListNode root = new ListNode(0);
+        // 引用传递,浅拷贝,以下进行处理会同步给上方的数据。
+        // 该指针不断变换,完成上方Node需要;
+        ListNode cursor = root;
+        // 进位变量
+        int carry = 0;
+
+        while(l1 != null || l2 != null || carry != 0) {
+            int l1Val = l1 != null ? l1.val : 0;
+            int l2Val = l2 != null ? l2.val : 0;
+            int sumVal = l1Val + l2Val + carry;
+            carry = sumVal / 10;
+
+            ListNode sumNode = new ListNode(sumVal % 10);
+            cursor.next = sumNode;
+            cursor = sumNode;
+
+            if(l1 != null) {
+                l1 = l1.next;
+            }
+            if(l2 != null) {
+                l2 = l2.next;
+            }
+        }
+
+        return root.next;
+    }
+
+    /**
+     * 老实人方案: 无法处理精度问题
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public static ListNode addTwoNumbersOne(ListNode l1, ListNode l2) {
 
         BigInteger resultOne = getNums(l1);
         BigInteger resultTwo = getNums(l2);
