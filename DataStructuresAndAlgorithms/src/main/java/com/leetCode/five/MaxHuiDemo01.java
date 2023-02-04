@@ -1,5 +1,6 @@
 package com.leetCode.five;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -13,22 +14,28 @@ public class MaxHuiDemo01 {
         String str = "abab";
         String palindrome = longestPalindrome(str);
         System.out.println("palindrome = " + palindrome);
+//        String byteToString = byteToString(str);
+
     }
 
     public static String longestPalindrome(String s) {
 
         String returnStr = "";
         int length = s.length();
-        int left = 0,right = 0;
+        int left = 0,right =1;
 
         for (int i = 0; i < s.length(); i++) {
 
             while (right < length) {
 
                 int limitLen = left + (length - left) / 2 + 1; // 超过这里就不需要遍历了,直接退出
+                // 设置指针;中间部分;
+                int middlePoint = left + (right - left) / 2 + 1;
+
                 String substring = s.substring(left, right);
-                String[] doReverse = doReverse(substring);
-                if (doReverse.equals(s.substring(limitLen, right))) {
+                String doReverse = doReverse(substring);
+                String substring1 = s.substring(middlePoint-1, right+1);
+                if (doReverse.equals(substring1)) {
                     //
                     if (right - left == Math.max(returnStr.length(), right - left)) {
                         returnStr = s.substring(left, right);
@@ -56,9 +63,19 @@ public class MaxHuiDemo01 {
         }
         return str;
     }
-    private static String[] doReverse(String result) {
+    private static String doReverse(String result) {
         String[] split = result.split("");
-        return doReverse(split);
+        String[] strings = doReverse(split);
+        return byteToString(strings);
+    }
+
+    private static String byteToString(String[] split) {
+        StringBuffer buffer = new StringBuffer();
+        for (String str:split){
+            buffer.append(str);
+        }
+        String v = buffer.toString();
+        return v;
     }
 
 }
