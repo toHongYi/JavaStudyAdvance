@@ -12,7 +12,11 @@ import java.util.Map;
  */
 public class twoSumDemo {
     public static void main(String[] args) {
-
+        int[] nums = new int[]{2,3,5,7,11,15};
+        int targert = 9;
+        int[] twoSum = twoSumDp(nums, targert);
+        System.out.println("twoSum = " + twoSum[0]);
+        System.out.println("twoSum = " + twoSum[1]);
     }
 
     public static int[] twoSum(int[] nums, int target) {
@@ -30,6 +34,39 @@ public class twoSumDemo {
         }
 
         return null;
+    }
+
+    /** 试一试动态规划的撰写方式 */
+    public static int[] twoSumDp(int[] nums, int target) {
+
+        int len = nums.length;
+        boolean[][] ints = new boolean[len][len];
+        int[] returnTarget = new int[2];
+
+        for (int j = 0; j < len ; j++) {
+            for (int i = 0; i <j; i++) {
+                if (nums[i] + nums[j] == target){
+                    ints[i][j] = true;
+                    returnTarget[0] = i;
+                    returnTarget[1] = j;
+                }
+            }
+        }
+
+        return returnTarget;
+    }
+
+    /** 试一试hash冲突的撰写方式 */
+    public static int[] twoSumCon(int[] nums, int target) {
+
+        Map<Integer, Integer> hashtable = new HashMap<Integer, Integer>();
+        for (int i = 0; i < nums.length; ++i) {
+            if (hashtable.containsKey(target - nums[i])) {
+                return new int[]{hashtable.get(target - nums[i]), i};
+            }
+            hashtable.put(nums[i], i);
+        }
+        return new int[0];
     }
 }
 
