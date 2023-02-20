@@ -12,7 +12,7 @@ public class TrappingRainWaterDemo02 {
 //        int[] height = new int[]{1, 2, 0, 3, 2, 5};
 //        int[] height = new int[]{1, 0, 2};
 
-        int trap = trap(height);
+        int trap = trapDP(height);
         System.out.println("trap = " + trap);
     }
 
@@ -50,7 +50,7 @@ public class TrappingRainWaterDemo02 {
     }
 
     /**
-     * 动态规划版
+     * 动态规划版【核心在于解决重复计算的问题】
      * @param height
      * @return 1、先求出最高的两根;
      */

@@ -13,7 +13,8 @@ public class TrappingRainByMMyself01 {
 //        int[] height = new int[]{1, 2, 0, 3, 2, 5};
 //        int[] height = new int[]{1, 0, 2};
 
-        int trap = trap(height);
+//        int trap = trap(height);
+        int trap = trapDp(height);
         System.out.println("trap = " + trap);
     }
 
@@ -64,4 +65,37 @@ public class TrappingRainByMMyself01 {
         return sum;
     }
 
+    /**
+     * 通过动态规划的方式,将上方重复的运算结果记录下来;
+     *
+     * @param height
+     * @return
+     */
+    public static int trapDp(int[] height) {
+        int sum = 0;
+        int len = height.length;
+
+        // 左侧的最高点
+        int[] left_hei = new int[len];
+        // 右侧的最高点
+        int[] right_hei = new int[len];
+
+        for (int i = 1; i < len - 1; i++) {
+            left_hei[i] = Math.max(height[i - 1], left_hei[i - 1]); // 最高值就在此
+        }
+
+        for (int i = len - 2; i > 0; i--) {
+            right_hei[i] = Math.max(height[i + 1], right_hei[i + 1]); // 最高值就在此
+        }
+
+        for (int i = 0; i < len - 1; i++) {
+            int min = Math.min(left_hei[i], right_hei[i]);
+            // 设计容量计算公式: min(left,right) - height
+            if (height[i] < min) {
+                sum = sum + min - height[i];
+            }
+        }
+
+        return sum;
+    }
 }
